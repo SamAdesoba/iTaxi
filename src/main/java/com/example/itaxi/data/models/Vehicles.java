@@ -1,2 +1,4 @@
-package com.example.itaxi.data.models;public class Vehincles {
+package com.example.itaxi.data.models;
+
+public class Vehicles {
 }

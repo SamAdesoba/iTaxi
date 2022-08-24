@@ -1,2 +1,4 @@
-package com.example.itaxi.data.models.enums;public class Gender {
+package com.example.itaxi.data.models.enums;
+
+public class Gender {
 }

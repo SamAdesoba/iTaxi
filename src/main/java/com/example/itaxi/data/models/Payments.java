@@ -1,4 +1,4 @@
 package com.example.itaxi.data.models;
 
-public class Payment {
+public class Payments {
 }
