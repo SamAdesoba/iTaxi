@@ -1,4 +1,5 @@
 package com.example.itaxi.data.models.enums;
 
-public class PaymentType {
+public enum PaymentType {
+    CARD, CASH, TRANSFER;
 }
