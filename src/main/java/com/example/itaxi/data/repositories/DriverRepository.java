@@ -12,7 +12,6 @@ import java.util.Optional;
 public interface DriverRepository extends JpaRepository<Driver, Long> {
     boolean existsByEmail(String email);
 
-
     List<Driver> findByLocation(String location);
 //    List<Driver> findByDriverStatus(DriverStatus driverStatus);
 

@@ -36,7 +36,7 @@ public class DriverServiceImpl implements DriverService{
     @Override
     public RegisterDriverResponse register(RegisterDriverRequest request) throws MismatchedPasswordException, UserExistException {
         if (driverRepository.existsByEmail(request.getEmail())) throw  new UserExistException("User Already Exist", HttpStatus.FORBIDDEN);
-            Driver driver = Driver
+        Driver driver = Driver
                     .builder()
                     .name(request.getName())
                     .email(request.getEmail())
@@ -46,12 +46,12 @@ public class DriverServiceImpl implements DriverService{
                     .password(request.getPassword())
                     .confirmPassword(request.getConfirmPassword())
                     .build();
-            if(request.getPassword().equals(request.getConfirmPassword())) {
-                Driver savedDrive = driverRepository.save(driver);
-                return RegisterDriverResponse
-                        .builder()
-                        .message("Hello " + savedDrive.getName() + " , Your registration was successful")
-                        .build();
+        if(request.getPassword().equals(request.getConfirmPassword())) {
+            Driver savedDrive = driverRepository.save(driver);
+            return RegisterDriverResponse
+                    .builder()
+                    .message("Hello " + savedDrive.getName() + " , Your registration was successful")
+                    .build();
             }
         throw new MismatchedPasswordException("Password does not match!!!", HttpStatus.FORBIDDEN);
     }
