@@ -17,7 +17,7 @@ public interface DriverService{
     LoginDriverResponse login(LoginDriverRequest request) throws InvalidDriverException, IncorrectPasswordException;
     List<Trip> getHistoryOfAllTrips(String email) throws NoTripHistoryForUserException;
     BookingResponse bookingDetails();
-    PaymentResponse payment(PaymentRequest request);
+    PaymentResponse payment(PaymentRequest request) throws InvalidUserException;
 
 
 }

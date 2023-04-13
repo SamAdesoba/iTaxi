@@ -2,10 +2,12 @@ package com.example.itaxi.services;
 
 
 import com.example.itaxi.data.models.Driver;
+import com.example.itaxi.data.models.Payment;
 import com.example.itaxi.data.models.Trip;
 import com.example.itaxi.data.models.Vehicle;
 import com.example.itaxi.data.models.enums.DriverStatus;
 import com.example.itaxi.data.repositories.DriverRepository;
+import com.example.itaxi.data.repositories.PaymentRepository;
 import com.example.itaxi.data.repositories.TripRepository;
 import com.example.itaxi.data.repositories.VehicleRepository;
 import com.example.itaxi.dtos.requests.*;
@@ -31,6 +33,8 @@ public class DriverServiceImpl implements DriverService{
 
     @Autowired
     private TripRepository tripRepository;
+    @Autowired
+    private PaymentRepository paymentRepository;
 
 
     @Override
@@ -133,27 +137,22 @@ public class DriverServiceImpl implements DriverService{
     }
 
     @Override
-    public PaymentResponse payment(PaymentRequest request) {
-        return null;
+    public PaymentResponse payment(PaymentRequest request) throws InvalidUserException {
+        Optional<Driver> driver = driverRepository.findByEmail(request.getEmail());
+        if (driver.isPresent()){
+            Payment payment = Payment
+                    .builder()
+                    .paymentType(request.getPaymentType())
+                    .amount(request.getAmount())
+                    .userEmail(request.getEmail())
+                    .build();
+            Payment savedPayment = paymentRepository.save(payment);
+
+            PaymentResponse response = new PaymentResponse();
+            response.setMessage(savedPayment + " has been made");
+
+
+        }
+        throw new InvalidUserException("Invalid Email", HttpStatus.NOT_FOUND) ;
     }
-//
-//    @Override
-//    public PaymentResponse payment(PaymentRequest request) {
-//        Optional<Driver> driver = driverRepository.findByEmail(request.getEmail());
-//        if (driver.isPresent()){
-//            Payment payment = Payment
-//                    .builder()
-//                    .paymentType(request.getPaymentType())
-//                    .amount(request.getAmount())
-//                    .userEmail(request.getUserEmail())
-//                    .build();
-//            Payment savedPayment = paymentRepository.save(payment);
-//
-//            PaymentResponse response = new PaymentResponse();
-//            response.setMessage(savedPayment);
-//
-//
-//        }
-//        throw new InvalidUserException("Invalid Email") ;
-//    }
 }
